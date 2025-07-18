@@ -70,8 +70,8 @@ export default function SignupForm() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-[calc(100vh-15rem)] py-12 px-4">
-      <Card className="w-full max-w-md shadow-md">
+    <div className="flex justify-center items-center py-12 px-4">
+      <Card className="w-full max-w-lg shadow-md">
         <CardHeader className="text-center">
           <div className="mx-auto bg-primary text-primary-foreground rounded-full h-16 w-16 flex items-center justify-center mb-4">
             <UtensilsCrossed className="h-8 w-8" />
@@ -147,7 +147,7 @@ export default function SignupForm() {
                 </button>
               </div>
               {userType === 'vendor' && (
-                <>
+                <div className="grid gap-4">
                   <div className="space-y-2">
                     <label htmlFor="organization" className="block font-medium mb-1">Organization Name</label>
                     <input
@@ -195,10 +195,10 @@ export default function SignupForm() {
                       required
                     />
                   </div>
-                </>
+                </div>
               )}
               {userType === 'ngo' && (
-                <>
+                <div className="grid gap-4">
                   <div className="space-y-2">
                     <label htmlFor="organization" className="block font-medium mb-1">Organization Name</label>
                     <input
@@ -235,10 +235,10 @@ export default function SignupForm() {
                       required
                     />
                   </div>
-                </>
+                </div>
               )}
               {userType === 'user' && (
-                <>
+                <div className="grid gap-4">
                   <div className="space-y-2">
                     <label htmlFor="phone" className="block font-medium mb-1">Phone (optional)</label>
                     <input
@@ -261,7 +261,7 @@ export default function SignupForm() {
                       onChange={(e) => setAddress(e.target.value)}
                     />
                   </div>
-                </>
+                </div>
               )}
               {error && <p className="text-destructive text-sm">{error}</p>}
               <Button
