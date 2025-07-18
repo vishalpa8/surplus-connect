@@ -15,10 +15,15 @@ import { createClient } from "@/lib/supabase/client";
 const DEMO_USERS = [
   { email: 'user@example.com', password: 'userpass', role: 'user', name: 'Demo User' },
   { email: 'vendor@example.com', password: 'vendorpass', role: 'vendor', name: 'Demo Vendor' },
+  { email: 'ngo@example.com', password: 'ngopass', role: 'ngo', name: 'Demo NGO' },
   { email: 'admin@example.com', password: 'adminpass', role: 'admin', name: 'Demo Admin' },
 ];
 
-export default function LoginForm() {
+export interface LoginFormProps {
+  embedded?: boolean
+}
+
+export default function LoginForm({ embedded = false }: LoginFormProps) {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -55,7 +60,13 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-[calc(100vh-15rem)] py-12 px-4">
+    <div
+      className={
+        embedded
+          ? 'mx-auto max-w-md py-8'
+          : 'flex justify-center items-center min-h-[calc(100vh-15rem)] py-12 px-4'
+      }
+    >
       <Card className="w-full max-w-md shadow-md">
         <CardHeader className="text-center">
           <div className="mx-auto bg-primary text-primary-foreground rounded-full h-16 w-16 flex items-center justify-center mb-4">
@@ -128,6 +139,7 @@ export default function LoginForm() {
               Demo accounts:<br />
               user@example.com / userpass<br />
               vendor@example.com / vendorpass<br />
+              ngo@example.com / ngopass<br />
               admin@example.com / adminpass
             </p>
           </form>

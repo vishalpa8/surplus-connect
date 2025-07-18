@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/Button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowRight, MapPin, ShoppingCart, Users, Award, Leaf } from "lucide-react";
 import Link from "next/link";
+import LoginForm from "./(auth)/login/LoginForm";
 
 const pricingData = [
   {
@@ -75,6 +76,13 @@ export default function Home() {
               </Button>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Quick Login Section */}
+      <section className="w-full bg-background">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <LoginForm embedded />
         </div>
       </section>
 
