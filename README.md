@@ -91,10 +91,7 @@ NEXT_PUBLIC_USE_MOCK_DATA=true
 
 When this flag is present the app loads the mock service modules. Removing it (or setting it to `false`) automatically switches to the real Supabase-based services under `src/services/*.ts`.
 
-## Frontend Architecture
-
-For a detailed overview of the recommended folder structure and design guidelines, see [docs/frontend-architecture.md](docs/frontend-architecture.md). The document covers component organization, navigation flow and how to extend the service layer when connecting a real backend.
-
+>>>>> master
 ## Deployment
 
 This application is ready to be deployed to [Vercel](https://vercel.com/).
