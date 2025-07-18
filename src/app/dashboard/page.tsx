@@ -24,6 +24,7 @@
 // --- Client-side logic (active) ---
 import VendorDashboard from '@/components/dashboard/VendorDashboard'
 import UserDashboard from '@/components/dashboard/UserDashboard'
+import NgoDashboard from '@/components/dashboard/NgoDashboard'
 import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
@@ -59,7 +60,13 @@ export default function Dashboard() {
           <h1 className="text-3xl font-bold">Dashboard</h1>
         </div>
       </div>
-      {role === 'vendor' ? <VendorDashboard /> : <UserDashboard />}
+      {role === 'vendor' ? (
+        <VendorDashboard />
+      ) : role === 'ngo' ? (
+        <NgoDashboard />
+      ) : (
+        <UserDashboard />
+      )}
     </div>
   );
 }

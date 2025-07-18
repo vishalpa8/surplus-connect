@@ -9,4 +9,13 @@ export default [
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
   ...fixupConfigRules(pluginReactConfig),
+  {
+    rules: {
+      "react/react-in-jsx-scope": "off",
+      "react/prop-types": "off",
+      "@typescript-eslint/no-empty-interface": "off",
+      "@typescript-eslint/no-empty-object-type": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+    },
+  },
 ];

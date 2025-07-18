@@ -1,51 +1,21 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from "@/components/ui/Button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowRight, MapPin, ShoppingCart, Users, Award, Leaf } from "lucide-react";
 import Link from "next/link";
+import LoginForm from "./(auth)/login/LoginForm";
 
-const pricingData = [
-  {
-    type: "Vendor",
-    color: "bg-primary/10 border-primary",
-    icon: <ShoppingCart className="h-8 w-8 text-primary" />,
-    perUse: "₹10/listing",
-    oneDay: "₹149 (all day)",
-    thirtyDay: "₹999 (month)",
-    desc: "For restaurants, grocers, and caterers to list surplus food.",
-  },
-  {
-    type: "NGO",
-    color: "bg-green-100 border-green-500",
-    icon: <Award className="h-8 w-8 text-green-600" />,
-    perUse: "₹5/claim*",
-    oneDay: "₹99 (all day)",
-    thirtyDay: "₹499 (month)",
-    desc: "For NGOs to claim and distribute food to those in need.",
-  },
-  {
-    type: "User",
-    color: "bg-blue-100 border-blue-500",
-    icon: <Users className="h-8 w-8 text-blue-600" />,
-    perUse: "₹5/claim",
-    oneDay: "₹49 (all day)",
-    thirtyDay: "₹149 (month)",
-    desc: "For individuals to claim surplus food and reduce waste.",
-  },
-];
 
 export default function Home() {
   const router = useRouter();
-  const [role, setRole] = useState<string | null>(null);
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const user = localStorage.getItem('demoUser');
       if (user) {
         const parsed = JSON.parse(user);
-        setRole(parsed.role);
         if (parsed.role === 'admin') router.replace('/admin');
         else router.replace('/dashboard');
       }
@@ -75,6 +45,13 @@ export default function Home() {
               </Button>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Quick Login Section */}
+      <section className="w-full bg-background">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <LoginForm embedded />
         </div>
       </section>
 
@@ -177,7 +154,7 @@ export default function Home() {
             Ready to Make an Impact?
           </h2>
           <p className="text-muted-foreground max-w-3xl mx-auto mb-8">
-            Whether you're a business with surplus food or an individual looking to help, you can be a part of the solution. Sign up today and join the movement to end food waste.
+            Whether you&apos;re a business with surplus food or an individual looking to help, you can be a part of the solution. Sign up today and join the movement to end food waste.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Button size="lg" asChild>

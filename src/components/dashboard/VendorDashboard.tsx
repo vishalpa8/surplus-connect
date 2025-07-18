@@ -35,7 +35,15 @@ export default function VendorDashboard() {
   const [error, setError] = useState<PostgrestError | null>(null)
   const [showAddForm, setShowAddForm] = useState(false)
   const [editingListing, setEditingListing] = useState<Listing | null>(null)
+  const [name, setName] = useState('')
   const supabase = createClient()
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const data = localStorage.getItem('demoUser')
+      if (data) setName(JSON.parse(data).name || '')
+    }
+  }, [])
 
   const fetchListings = async () => {
     const { data: { user } } = await supabase.auth.getUser()
@@ -88,6 +96,7 @@ export default function VendorDashboard() {
 
   return (
     <div className="space-y-8">
+      <h2 className="text-xl font-semibold">Welcome, {name || 'Vendor'}</h2>
       {showAddForm && <AddListingForm onSuccess={handleSuccess} onCancel={() => setShowAddForm(false)} />}
       {editingListing && <EditListingForm listing={editingListing} onSuccess={handleSuccess} onCancel={() => setEditingListing(null)} />}
 
@@ -100,7 +109,7 @@ export default function VendorDashboard() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-primary">{listings.length}</div>
-            <p className="text-xs text-muted-foreground">Total items you've listed.</p>
+            <p className="text-xs text-muted-foreground">Total items you&apos;ve listed.</p>
           </CardContent>
         </Card>
         <Card>

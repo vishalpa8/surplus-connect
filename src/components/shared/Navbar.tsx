@@ -37,7 +37,7 @@ export default function Navbar() {
 
   const closeSheet = () => setIsSheetOpen(false)
 
-  let navLinks = [
+  const navLinks = [
     { href: '/', label: 'Home' },
     { href: '/map', label: 'Map' },
     { href: '/pricing', label: 'Pricing' },

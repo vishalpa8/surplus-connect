@@ -4,11 +4,12 @@
 const DEMO_USERS = [
   { email: 'user@example.com', password: 'userpass', role: 'user', name: 'Demo User' },
   { email: 'vendor@example.com', password: 'vendorpass', role: 'vendor', name: 'Demo Vendor' },
+  { email: 'ngo@example.com', password: 'ngopass', role: 'ngo', name: 'Demo NGO' },
   { email: 'admin@example.com', password: 'adminpass', role: 'admin', name: 'Demo Admin' },
 ];
 
 import { useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import {
   Card,
   CardContent,
@@ -19,9 +20,7 @@ import {
 import { UtensilsCrossed } from "lucide-react";
 // --- Enable Supabase Auth for social login ---
 import { Auth } from "@supabase/auth-ui-react";
-import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { createClient } from "@/lib/supabase/client";
-import { useTheme } from "next-themes";
 
 interface AuthFormProps {
   view: "sign_up" | "login";
@@ -35,7 +34,6 @@ function getRoleFromEmail(email: string): 'admin' | 'vendor' | 'user' {
 
 export default function AuthForm({ view }: AuthFormProps) {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -43,7 +41,6 @@ export default function AuthForm({ view }: AuthFormProps) {
   const [organization, setOrganization] = useState("");
   const [error, setError] = useState<string | null>(null);
   const supabase = createClient();
-  const { theme } = useTheme();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -260,6 +257,7 @@ export default function AuthForm({ view }: AuthFormProps) {
                 Demo accounts:<br />
                 user@example.com / userpass<br />
                 vendor@example.com / vendorpass<br />
+                ngo@example.com / ngopass<br />
                 admin@example.com / adminpass
               </p>
             )}
