@@ -186,6 +186,29 @@ export interface Database {
           created_at?: string;
         };
       };
+      contact_messages: {
+        Row: {
+          id: number;
+          name: string;
+          email: string;
+          message: string;
+          created_at: string;
+        };
+        Insert: {
+          id?: number;
+          name: string;
+          email: string;
+          message: string;
+          created_at?: string;
+        };
+        Update: {
+          id?: number;
+          name?: string;
+          email?: string;
+          message?: string;
+          created_at?: string;
+        };
+      };
     };
     Views: {
       [_ in never]: never;
