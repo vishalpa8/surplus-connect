@@ -81,6 +81,16 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+### Using Mock Services
+
+The `src/services` directory contains mock implementations so you can try the frontend without a running backend. Set the following flag in your `.env.local` file:
+
+```bash
+NEXT_PUBLIC_USE_MOCK_DATA=true
+```
+
+When this flag is present the app loads the mock service modules. Removing it (or setting it to `false`) automatically switches to the real Supabase-based services under `src/services/*.ts`.
+
 ## Deployment
 
 This application is ready to be deployed to [Vercel](https://vercel.com/).

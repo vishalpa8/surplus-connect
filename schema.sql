@@ -67,6 +67,15 @@ CREATE TABLE IF NOT EXISTS public.analytics (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+-- CONTACT MESSAGES TABLE
+CREATE TABLE IF NOT EXISTS public.contact_messages (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  message TEXT NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
 -- ENABLE RLS
 ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.listings ENABLE ROW LEVEL SECURITY;
@@ -74,6 +83,7 @@ ALTER TABLE public.reservations ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.notifications ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.analytics ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.badges ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.contact_messages ENABLE ROW LEVEL SECURITY;
 
 -- RLS POLICIES (same as your original, with extra for notifications/analytics)
 -- Add as needed (for brevity, reuse your policies, add these as examples):
@@ -89,6 +99,10 @@ CREATE POLICY "Users can view their own analytics."
 -- Badges: Anyone can read badges (for displaying them in UI)
 CREATE POLICY "Badges are viewable by everyone."
   ON public.badges FOR SELECT USING (true);
+
+-- Contact messages: anyone can submit
+CREATE POLICY "Anyone can submit contact messages"
+  ON public.contact_messages FOR INSERT WITH CHECK (true);
 
 -- Automated Badge Assignment Logic
 CREATE OR REPLACE FUNCTION public.assign_badge()
