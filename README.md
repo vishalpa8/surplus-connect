@@ -4,7 +4,7 @@ Surplus Connect is a full-stack web application that solves the global food wast
 
 ## Features
 
-- **Vendor Portal:** Vendors can register, login, and post surplus food listings.
+- **Vendor Portal:** Vendors can register, login, and post surplus food listings as much as they want.
 - **Consumer Portal:** Consumers/NGOs can browse available food on a live map, reserve items, and get pickup details.
 - **Real-time Map:** Live map with available food listings using Leaflet.js and OpenStreetMap.
 - **Authentication:** Secure authentication with Supabase Auth.
@@ -80,6 +80,32 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+### Using Mock Services
+
+The `src/services` directory contains mock implementations so you can try the frontend without a running backend. Set the following flag in your `.env.local` file:
+
+```bash
+NEXT_PUBLIC_USE_MOCK_DATA=true
+```
+
+When this flag is present the app loads the mock service modules. Removing it (or setting it to `false`) automatically switches to the real Supabase-based services under `src/services/*.ts`.
+
+## Frontend Architecture
+
+For a detailed overview of the recommended folder structure and design guidelines, see [docs/frontend-architecture.md](docs/frontend-architecture.md). The document covers component organization, navigation flow and how to extend the service layer when connecting a real backend.
+
+### Using Mock Services
+
+The `src/services` directory contains mock implementations so you can try the frontend without a running backend. Set the following flag in your `.env.local` file:
+
+```bash
+NEXT_PUBLIC_USE_MOCK_DATA=true
+```
+
+When this flag is present the app loads the mock service modules. Removing it (or setting it to `false`) automatically switches to the real Supabase-based services under `src/services/*.ts`.
+
+> > > > > master
 
 ## Deployment
 
