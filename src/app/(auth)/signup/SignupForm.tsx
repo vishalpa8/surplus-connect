@@ -11,6 +11,8 @@ import {
 } from "@/components/ui/card";
 import { UtensilsCrossed, Award, ShoppingCart, Users } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 const userTypes = [
   {
@@ -102,11 +104,10 @@ export default function SignupForm() {
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6 mt-2">
               <div className="space-y-2">
-                <label htmlFor="name" className="block font-medium mb-1">Name</label>
-                <input
+                <Label htmlFor="name">Name</Label>
+                <Input
                   id="name"
                   type="text"
-                  className="w-full border border-border rounded px-3 py-2 bg-background"
                   placeholder="Your name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
@@ -114,11 +115,10 @@ export default function SignupForm() {
                 />
               </div>
               <div className="space-y-2">
-                <label htmlFor="email" className="block font-medium mb-1">Email</label>
-                <input
+                <Label htmlFor="email">Email</Label>
+                <Input
                   id="email"
                   type="email"
-                  className="w-full border border-border rounded px-3 py-2 bg-background"
                   placeholder="you@email.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -126,11 +126,11 @@ export default function SignupForm() {
                 />
               </div>
               <div className="space-y-2 relative">
-                <label htmlFor="password" className="block font-medium mb-1">Password</label>
-                <input
+                <Label htmlFor="password">Password</Label>
+                <Input
                   id="password"
                   type={showPassword ? "text" : "password"}
-                  className="w-full border border-border rounded px-3 py-2 bg-background pr-10"
+                  className="pr-10"
                   placeholder="Your password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -149,11 +149,10 @@ export default function SignupForm() {
               {userType === 'vendor' && (
                 <>
                   <div className="space-y-2">
-                    <label htmlFor="organization" className="block font-medium mb-1">Organization Name</label>
-                    <input
+                    <Label htmlFor="organization">Organization Name</Label>
+                    <Input
                       id="organization"
                       type="text"
-                      className="w-full border border-border rounded px-3 py-2 bg-background"
                       placeholder="Business/Shop Name"
                       value={organization}
                       onChange={(e) => setOrganization(e.target.value)}
@@ -161,11 +160,10 @@ export default function SignupForm() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <label htmlFor="businessType" className="block font-medium mb-1">Business Type</label>
-                    <input
+                    <Label htmlFor="businessType">Business Type</Label>
+                    <Input
                       id="businessType"
                       type="text"
-                      className="w-full border border-border rounded px-3 py-2 bg-background"
                       placeholder="e.g. Restaurant, Grocery, Caterer"
                       value={businessType}
                       onChange={(e) => setBusinessType(e.target.value)}
@@ -173,22 +171,20 @@ export default function SignupForm() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <label htmlFor="gstin" className="block font-medium mb-1">GSTIN (optional)</label>
-                    <input
+                    <Label htmlFor="gstin">GSTIN (optional)</Label>
+                    <Input
                       id="gstin"
                       type="text"
-                      className="w-full border border-border rounded px-3 py-2 bg-background"
                       placeholder="GSTIN Number"
                       value={gstin}
                       onChange={(e) => setGstin(e.target.value)}
                     />
                   </div>
                   <div className="space-y-2">
-                    <label htmlFor="address" className="block font-medium mb-1">Address</label>
-                    <input
+                    <Label htmlFor="address">Address</Label>
+                    <Input
                       id="address"
                       type="text"
-                      className="w-full border border-border rounded px-3 py-2 bg-background"
                       placeholder="Business Address"
                       value={address}
                       onChange={(e) => setAddress(e.target.value)}
@@ -200,11 +196,10 @@ export default function SignupForm() {
               {userType === 'ngo' && (
                 <>
                   <div className="space-y-2">
-                    <label htmlFor="organization" className="block font-medium mb-1">Organization Name</label>
-                    <input
+                    <Label htmlFor="organization">Organization Name</Label>
+                    <Input
                       id="organization"
                       type="text"
-                      className="w-full border border-border rounded px-3 py-2 bg-background"
                       placeholder="NGO Name"
                       value={organization}
                       onChange={(e) => setOrganization(e.target.value)}
@@ -212,11 +207,10 @@ export default function SignupForm() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <label htmlFor="ngoReg" className="block font-medium mb-1">NGO Registration Number</label>
-                    <input
+                    <Label htmlFor="ngoReg">NGO Registration Number</Label>
+                    <Input
                       id="ngoReg"
                       type="text"
-                      className="w-full border border-border rounded px-3 py-2 bg-background"
                       placeholder="Registration Number"
                       value={ngoReg}
                       onChange={(e) => setNgoReg(e.target.value)}
@@ -224,11 +218,10 @@ export default function SignupForm() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <label htmlFor="address" className="block font-medium mb-1">Address</label>
-                    <input
+                    <Label htmlFor="address">Address</Label>
+                    <Input
                       id="address"
                       type="text"
-                      className="w-full border border-border rounded px-3 py-2 bg-background"
                       placeholder="NGO Address"
                       value={address}
                       onChange={(e) => setAddress(e.target.value)}
@@ -240,22 +233,20 @@ export default function SignupForm() {
               {userType === 'user' && (
                 <>
                   <div className="space-y-2">
-                    <label htmlFor="phone" className="block font-medium mb-1">Phone (optional)</label>
-                    <input
+                    <Label htmlFor="phone">Phone (optional)</Label>
+                    <Input
                       id="phone"
                       type="tel"
-                      className="w-full border border-border rounded px-3 py-2 bg-background"
                       placeholder="Phone number"
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                     />
                   </div>
                   <div className="space-y-2">
-                    <label htmlFor="address" className="block font-medium mb-1">Address (optional)</label>
-                    <input
+                    <Label htmlFor="address">Address (optional)</Label>
+                    <Input
                       id="address"
                       type="text"
-                      className="w-full border border-border rounded px-3 py-2 bg-background"
                       placeholder="Your Address"
                       value={address}
                       onChange={(e) => setAddress(e.target.value)}

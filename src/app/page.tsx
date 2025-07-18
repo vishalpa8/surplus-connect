@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Button } from "@/components/ui/Button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowRight, MapPin, ShoppingCart, Users, Award, Leaf } from "lucide-react";
+import LoginForm from "./(auth)/login/LoginForm";
 import Link from "next/link";
 
 const pricingData = [
@@ -75,6 +76,13 @@ export default function Home() {
               </Button>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Quick Login Section */}
+      <section className="w-full py-10 bg-background border-b border-border">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-md">
+          <LoginForm />
         </div>
       </section>
 

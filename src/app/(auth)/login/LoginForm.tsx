@@ -11,10 +11,13 @@ import {
 } from "@/components/ui/card";
 import { UtensilsCrossed, Eye, EyeOff } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 const DEMO_USERS = [
   { email: 'user@example.com', password: 'userpass', role: 'user', name: 'Demo User' },
   { email: 'vendor@example.com', password: 'vendorpass', role: 'vendor', name: 'Demo Vendor' },
+  { email: 'ngo@example.com', password: 'ngopass', role: 'ngo', name: 'Demo NGO' },
   { email: 'admin@example.com', password: 'adminpass', role: 'admin', name: 'Demo Admin' },
 ];
 
@@ -85,11 +88,10 @@ export default function LoginForm() {
           </div>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2 relative">
-              <label htmlFor="email" className="block font-medium mb-1">Email</label>
-              <input
+              <Label htmlFor="email">Email</Label>
+              <Input
                 id="email"
                 type="email"
-                className="w-full border border-border rounded px-3 py-2 bg-background"
                 placeholder="you@email.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -97,11 +99,11 @@ export default function LoginForm() {
               />
             </div>
             <div className="space-y-2 relative">
-              <label htmlFor="password" className="block font-medium mb-1">Password</label>
-              <input
+              <Label htmlFor="password">Password</Label>
+              <Input
                 id="password"
                 type={showPassword ? "text" : "password"}
-                className="w-full border border-border rounded px-3 py-2 bg-background pr-10"
+                className="pr-10"
                 placeholder="Your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -128,6 +130,7 @@ export default function LoginForm() {
               Demo accounts:<br />
               user@example.com / userpass<br />
               vendor@example.com / vendorpass<br />
+              ngo@example.com / ngopass<br />
               admin@example.com / adminpass
             </p>
           </form>
