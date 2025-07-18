@@ -37,14 +37,17 @@ export default function Navbar() {
 
   const closeSheet = () => setIsSheetOpen(false)
 
-  let navLinks = [
-    { href: '/', label: 'Home' },
-    { href: '/map', label: 'Map' },
-    { href: '/pricing', label: 'Pricing' },
-  ]
+  let navLinks = role
+    ? [{ href: '/map', label: 'Map' }]
+    : [
+        { href: '/', label: 'Home' },
+        { href: '/map', label: 'Map' },
+        { href: '/pricing', label: 'Pricing' },
+      ]
+
   if (role === 'admin') {
     navLinks.push({ href: '/admin', label: 'Admin' })
-  } else if (role === 'vendor' || role === 'user') {
+  } else if (role === 'vendor' || role === 'user' || role === 'ngo') {
     navLinks.push({ href: '/dashboard', label: 'Dashboard' })
   }
 

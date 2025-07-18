@@ -15,6 +15,7 @@ import { createClient } from "@/lib/supabase/client";
 const DEMO_USERS = [
   { email: 'user@example.com', password: 'userpass', role: 'user', name: 'Demo User' },
   { email: 'vendor@example.com', password: 'vendorpass', role: 'vendor', name: 'Demo Vendor' },
+  { email: 'ngo@example.com', password: 'ngopass', role: 'ngo', name: 'Demo NGO' },
   { email: 'admin@example.com', password: 'adminpass', role: 'admin', name: 'Demo Admin' },
 ];
 
@@ -128,6 +129,7 @@ export default function LoginForm() {
               Demo accounts:<br />
               user@example.com / userpass<br />
               vendor@example.com / vendorpass<br />
+              ngo@example.com / ngopass<br />
               admin@example.com / adminpass
             </p>
           </form>

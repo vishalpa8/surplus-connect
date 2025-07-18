@@ -24,6 +24,7 @@
 // --- Client-side logic (active) ---
 import VendorDashboard from '@/components/dashboard/VendorDashboard'
 import UserDashboard from '@/components/dashboard/UserDashboard'
+import NgoDashboard from '@/components/dashboard/NgoDashboard'
 import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
@@ -36,17 +37,29 @@ export default function Dashboard() {
 
   useEffect(() => {
     const fetchRole = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        router.replace('/login');
-        return;
+      const stored = localStorage.getItem('demoUser')
+      if (stored) {
+        const { role } = JSON.parse(stored)
+        setRole(role)
+        setLoading(false)
+        return
       }
-      const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single();
-      setRole(profile?.role || null);
-      setLoading(false);
-    };
-    fetchRole();
-  }, [supabase, router]);
+
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) {
+        router.replace('/login')
+        return
+      }
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', user.id)
+        .single()
+      setRole(profile?.role || null)
+      setLoading(false)
+    }
+    fetchRole()
+  }, [supabase, router])
 
   if (loading) {
     return <div className="container mx-auto py-10 px-4 sm:px-6 lg:px-8">Loading...</div>;
@@ -59,7 +72,13 @@ export default function Dashboard() {
           <h1 className="text-3xl font-bold">Dashboard</h1>
         </div>
       </div>
-      {role === 'vendor' ? <VendorDashboard /> : <UserDashboard />}
+      {role === 'vendor' ? (
+        <VendorDashboard />
+      ) : role === 'ngo' ? (
+        <NgoDashboard />
+      ) : (
+        <UserDashboard />
+      )}
     </div>
   );
 }

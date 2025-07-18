@@ -274,6 +274,7 @@ export default function SignupForm() {
                 Demo accounts:<br />
                 user@example.com / userpass<br />
                 vendor@example.com / vendorpass<br />
+                ngo@example.com / ngopass<br />
                 admin@example.com / adminpass
               </p>
             </form>
