@@ -60,7 +60,15 @@ export default function UserDashboard() {
   const [profile, setProfile] = useState<Profile | null>(null)
   const [error, setError] = useState<PostgrestError | null>(null)
   const [mounted, setMounted] = useState(false)
+  const [name, setName] = useState('')
   const supabase = createClient()
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const data = localStorage.getItem('demoUser')
+      if (data) setName(JSON.parse(data).name || '')
+    }
+  }, [])
 
   useEffect(() => {
     setMounted(true)
@@ -123,6 +131,7 @@ export default function UserDashboard() {
 
   return (
     <div className="space-y-8">
+      <h2 className="text-xl font-semibold">Welcome, {name || 'User'}</h2>
       {/* Impact Stats Section */}
       <section>
         <div className="grid gap-4 md:grid-cols-3">
