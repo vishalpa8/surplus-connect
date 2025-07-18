@@ -3,57 +3,59 @@
 import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
 import { usePathname } from 'next/navigation'
-import { createClient } from '@/lib/supabase/client'
 import { useEffect, useState } from 'react'
-import { User } from '@supabase/supabase-js'
 import { ThemeToggle } from '@/components/ThemeToggle'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { Menu, UtensilsCrossed } from 'lucide-react'
 
 export default function Navbar() {
   const pathname = usePathname()
-  const [user, setUser] = useState<User | null>(null)
+  const [user, setUser] = useState(null)
+  const [role, setRole] = useState<string | null>(null)
   const [isSheetOpen, setIsSheetOpen] = useState(false)
-  const supabase = createClient()
 
   useEffect(() => {
-    const getUser = async () => {
-      const { data } = await supabase.auth.getUser()
-      setUser(data.user)
+    if (typeof window !== 'undefined') {
+      const demoUser = localStorage.getItem('demoUser')
+      if (demoUser) {
+        const parsed = JSON.parse(demoUser)
+        setUser(parsed)
+        setRole(parsed.role)
+      } else {
+        setUser(null)
+        setRole(null)
+      }
     }
-    getUser()
-
-    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
-      setUser(session?.user ?? null)
-    })
-
-    return () => {
-      authListener.subscription.unsubscribe()
-    }
-  }, [supabase.auth])
+  }, [pathname])
 
   const handleSignOut = async () => {
-    await supabase.auth.signOut()
+    localStorage.removeItem('demoUser')
     setUser(null)
+    setRole(null)
     window.location.href = '/'
   }
 
   const closeSheet = () => setIsSheetOpen(false)
 
-  const navLinks = [
+  let navLinks = [
     { href: '/', label: 'Home' },
     { href: '/map', label: 'Map' },
     { href: '/pricing', label: 'Pricing' },
-    { href: '/dashboard', label: 'Dashboard' },
   ]
+  if (role === 'admin') {
+    navLinks.push({ href: '/admin', label: 'Admin' })
+  } else if (role === 'vendor' || role === 'user') {
+    navLinks.push({ href: '/dashboard', label: 'Dashboard' })
+  }
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <Link href="/" className="flex items-center gap-2 text-xl font-bold text-primary">
-            <UtensilsCrossed className="h-6 w-6" />
-            SurplusConnect
+          <Link href="/" className={`flex items-center gap-2 text-2xl font-bold text-primary transition-colors ${pathname !== '/' ? '' : 'text-foreground'}`}
+            style={{ minWidth: 160 }}>
+            {pathname !== '/' && <UtensilsCrossed className="h-6 w-6" />}
+            <span className="tracking-tight">SurplusConnect</span>
           </Link>
 
           {/* Desktop Nav */}
@@ -62,7 +64,7 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-sm font-medium transition-colors hover:text-primary ${
+                className={`text-base font-medium transition-colors hover:text-primary ${
                   pathname === link.href
                     ? 'text-primary'
                     : 'text-muted-foreground'

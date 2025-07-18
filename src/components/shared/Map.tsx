@@ -26,8 +26,13 @@ type Listing = {
 const Map = () => {
   const [listings, setListings] = useState<Listing[]>([])
   const [error, setError] = useState<PostgrestError | null>(null)
+  const [mounted, setMounted] = useState(false)
   const supabase = createClient()
   const { theme } = useTheme()
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   useEffect(() => {
     const fetchListings = async () => {
@@ -68,6 +73,7 @@ const Map = () => {
 
   const position: [number, number] = [51.52, -0.10] // Centered view
 
+  if (!mounted) return null
   if (error) {
     return <div className="p-4 text-destructive-foreground bg-destructive rounded-md">{error.message}</div>
   }

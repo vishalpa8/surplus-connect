@@ -1,5 +1,5 @@
-import AuthForm from '../auth-form'
+import LoginForm from './LoginForm';
 
 export default function LoginPage() {
-  return <AuthForm view="login" />
+  return <LoginForm />;
 }

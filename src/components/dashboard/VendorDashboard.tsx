@@ -25,6 +25,11 @@ type Listing = {
   status: 'available' | 'reserved' | 'collected';
 }
 
+const dummyListings = [
+  { id: '1', name: 'Fresh Bread', quantity: 10, status: 'available' },
+  { id: '2', name: 'Vegetable Soup', quantity: 5, status: 'reserved' },
+];
+
 export default function VendorDashboard() {
   const [listings, setListings] = useState<Listing[]>([])
   const [error, setError] = useState<PostgrestError | null>(null)
@@ -51,6 +56,10 @@ export default function VendorDashboard() {
 
   useEffect(() => {
     fetchListings()
+    // If no listings after fetch, show dummy data for demo
+    setTimeout(() => {
+      setListings((prev) => (prev.length === 0 ? dummyListings : prev))
+    }, 1000)
   }, [])
 
   const handleSuccess = () => {
@@ -173,8 +182,8 @@ export default function VendorDashboard() {
                     ))
                   ) : (
                     <TableRow>
-                      <TableCell colSpan={4} className="h-24 text-center">
-                        No listings found.
+                      <TableCell colSpan={4} className="h-24 text-center text-muted-foreground">
+                        No listings found. Add your first surplus item!
                       </TableCell>
                     </TableRow>
                   )}

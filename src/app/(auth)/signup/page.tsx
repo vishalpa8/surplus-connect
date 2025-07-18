@@ -1,5 +1,5 @@
-import AuthForm from '../auth-form'
+import SignupForm from './SignupForm';
 
 export default function SignupPage() {
-  return <AuthForm view="sign_up" />
+  return <SignupForm />;
 }

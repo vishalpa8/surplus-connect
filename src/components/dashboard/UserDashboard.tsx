@@ -32,11 +32,43 @@ type Profile = {
   meals_saved: number;
 }
 
+const dummyReservations = [
+  {
+    id: '1',
+    listings: {
+      name: 'Fresh Bread',
+      pickup_window_start: '2024-06-01T10:00:00Z',
+      pickup_window_end: '2024-06-01T12:00:00Z',
+      profiles: { name: 'Vendor A' },
+    },
+    status: 'active',
+  },
+  {
+    id: '2',
+    listings: {
+      name: 'Vegetable Soup',
+      pickup_window_start: '2024-06-02T14:00:00Z',
+      pickup_window_end: '2024-06-02T16:00:00Z',
+      profiles: { name: 'Vendor B' },
+    },
+    status: 'completed',
+  },
+];
+
 export default function UserDashboard() {
   const [reservations, setReservations] = useState<Reservation[]>([])
   const [profile, setProfile] = useState<Profile | null>(null)
   const [error, setError] = useState<PostgrestError | null>(null)
+  const [mounted, setMounted] = useState(false)
   const supabase = createClient()
+
+  useEffect(() => {
+    setMounted(true)
+    // If no reservations after fetch, show dummy data for demo
+    setTimeout(() => {
+      setReservations((prev) => (prev.length === 0 ? dummyReservations : prev))
+    }, 1000)
+  }, [])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -79,6 +111,7 @@ export default function UserDashboard() {
     fetchData()
   }, [supabase])
 
+  if (!mounted) return null
   if (error) {
     return <Card><CardContent><p className="py-4 text-destructive">Error loading your data: {error.message}</p></CardContent></Card>
   }
@@ -170,8 +203,8 @@ export default function UserDashboard() {
                     ))
                   ) : (
                     <TableRow>
-                      <TableCell colSpan={4} className="h-24 text-center">
-                        You have no reservations.
+                      <TableCell colSpan={4} className="h-24 text-center text-muted-foreground">
+                        You have no reservations yet. Reserve your first meal!
                       </TableCell>
                     </TableRow>
                   )}
