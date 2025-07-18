@@ -4,7 +4,7 @@ Surplus Connect is a full-stack web application that solves the global food wast
 
 ## Features
 
-- **Vendor Portal:** Vendors can register, login, and post surplus food listings.
+- **Vendor Portal:** Vendors can register, login, and post surplus food listings as much as they want.
 - **Consumer Portal:** Consumers/NGOs can browse available food on a live map, reserve items, and get pickup details.
 - **Real-time Map:** Live map with available food listings using Leaflet.js and OpenStreetMap.
 - **Authentication:** Secure authentication with Supabase Auth.
