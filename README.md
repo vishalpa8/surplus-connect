@@ -91,7 +91,7 @@ NEXT_PUBLIC_USE_MOCK_DATA=true
 
 When this flag is present the app loads the mock service modules. Removing it (or setting it to `false`) automatically switches to the real Supabase-based services under `src/services/*.ts`.
 
->>>>>> master
+>>>>> master
 ## Deployment
 
 This application is ready to be deployed to [Vercel](https://vercel.com/).
