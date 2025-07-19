@@ -1,0 +1,198 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Base styles */
+  :root {
+    --header-height: 5rem; /* Increased height for a more modern look */
+    --sidebar-width: 16rem;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-accent text-gray-800; /* Use cream accent color for background */
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-bold tracking-tight text-gray-900;
+  }
+}
+
+@layer components {
+  /* Container */
+  .container-custom {
+    @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Buttons */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border text-base font-bold transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60;
+    /* Bolder, larger default radius */
+  }
+
+  .btn-sm {
+    @apply px-3 py-1.5 text-sm;
+  }
+
+  .btn-md {
+    @apply px-5 py-2.5 text-base;
+  }
+
+  .btn-lg {
+    @apply px-7 py-3 text-lg;
+  }
+
+  /* Button variants */
+  .btn-primary {
+    @apply btn border-transparent bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500;
+  }
+  
+  .btn-secondary {
+    @apply btn border-transparent bg-secondary-500 text-white hover:bg-secondary-600 focus:ring-secondary-500;
+  }
+
+  .btn-outline {
+    @apply btn border-gray-300 bg-white text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:ring-primary-500;
+  }
+
+  .btn-soft {
+    @apply btn border-transparent bg-primary-100 text-primary-700 hover:bg-primary-200 focus:ring-primary-500;
+  }
+
+  .btn-danger {
+    @apply btn border-transparent bg-error-600 text-white hover:bg-error-700 focus:ring-error-500;
+  }
+
+  /* Cards */
+  .card {
+    @apply rounded-2xl border border-gray-200/80 bg-white shadow-soft-md transition-all;
+    /* Larger radius, softer shadow */
+  }
+
+  .card-hover {
+    @apply hover:border-gray-300 hover:shadow-soft-lg;
+  }
+
+  .card-interactive {
+    @apply card card-hover cursor-pointer;
+  }
+
+  /* Form Controls */
+  .form-label {
+    @apply mb-2 block text-sm font-bold text-gray-700;
+  }
+
+  .form-hint {
+    @apply mt-2 text-sm text-gray-500;
+  }
+
+  .form-error {
+    @apply mt-2 text-sm text-error-600;
+  }
+
+  .form-input {
+    @apply block w-full rounded-xl border-gray-300 shadow-soft-xs transition-colors focus:border-primary-500 focus:ring-primary-500 disabled:bg-gray-100 disabled:text-gray-500;
+    /* Larger radius */
+  }
+
+  .form-select {
+    @apply block w-full rounded-xl border-gray-300 shadow-soft-xs transition-colors focus:border-primary-500 focus:ring-primary-500 disabled:bg-gray-100 disabled:text-gray-500;
+  }
+
+  .form-checkbox {
+    @apply h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500;
+  }
+
+  .form-radio {
+    @apply h-4 w-4 border-gray-300 text-primary-600 focus:ring-primary-500;
+  }
+
+  /* Badges */
+  .badge {
+    @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-medium ring-1 ring-inset;
+  }
+
+  .badge-primary {
+    @apply badge bg-primary-100 text-primary-800 ring-primary-600/20;
+  }
+  
+  .badge-secondary {
+    @apply badge bg-secondary-100 text-secondary-800 ring-secondary-600/20;
+  }
+
+  .badge-success {
+    @apply badge bg-success-100 text-success-800 ring-success-600/20;
+  }
+
+  .badge-warning {
+    @apply badge bg-warning-100 text-warning-800 ring-warning-600/20;
+  }
+
+  .badge-error {
+    @apply badge bg-error-100 text-error-800 ring-error-600/20;
+  }
+
+  .badge-gray {
+    @apply badge bg-gray-100 text-gray-800 ring-gray-600/20;
+  }
+
+  /* Links */
+  .link {
+    @apply font-bold text-primary-600 transition-colors hover:text-primary-700;
+  }
+
+  .link-muted {
+    @apply font-medium text-gray-600 transition-colors hover:text-gray-900;
+  }
+
+  /* Section Spacing */
+  .section {
+    @apply py-20 sm:py-28 lg:py-36;
+  }
+
+  .section-sm {
+    @apply py-16 sm:py-20 lg:py-24;
+  }
+
+  .section-xs {
+    @apply py-12 sm:py-16 lg:py-20;
+  }
+  
+  /* Other components from original file can remain, they are well-structured */
+  /* Data Display */
+  .table-wrapper {
+    @apply overflow-hidden rounded-2xl border border-gray-200/80 bg-white shadow-soft-md;
+  }
+
+  .table {
+    @apply min-w-full divide-y divide-gray-200;
+  }
+
+  .th {
+    @apply px-4 py-3.5 text-left text-sm font-bold text-gray-900;
+  }
+
+  .td {
+    @apply whitespace-nowrap px-4 py-4 text-sm text-gray-600;
+  }
+
+  /* Overlay & Modal */
+  .overlay {
+    @apply fixed inset-0 z-40 bg-gray-900/50 backdrop-blur-sm transition-opacity;
+  }
+
+  .modal {
+    @apply fixed inset-0 z-50 overflow-y-auto;
+  }
+
+  .modal-panel {
+    @apply relative mx-auto mt-16 w-full max-w-lg transform rounded-2xl bg-white p-6 shadow-soft-lg transition-all sm:p-8;
+  }
+}
