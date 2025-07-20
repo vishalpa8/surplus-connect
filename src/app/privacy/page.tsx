@@ -4,7 +4,7 @@ export default function PrivacyPage() {
   return (
     <StaticPageLayout title="Privacy Policy">
       <p>
-        Your privacy is important to us. It is SurplusConnect's policy to respect your privacy regarding any information we may collect from you across our website, and other sites we own and operate.
+        Your privacy is important to us. It is SurplusConnect&apos;s policy to respect your privacy regarding any information we may collect from you across our website, and other sites we own and operate.
       </p>
       <h2>1. Information we collect</h2>
       <p>

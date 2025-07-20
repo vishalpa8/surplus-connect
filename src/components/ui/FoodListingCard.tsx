@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
-import clsx from 'clsx';
+import { Button } from './Button';
+import { Calendar, ShoppingBasket, Clock } from 'lucide-react';
 
 interface FoodListingCardProps {
   id: string;
@@ -31,12 +32,24 @@ export function FoodListingCard({
     setImageError(true);
   };
 
+  const formatPickupWindow = (window: string | undefined) => {
+    if (!window) return 'N/A';
+    // This is a simple format, if the window is more complex, this will need to be updated
+    return window.replace(/(\d{1,2}:\d{2})/, (match) => {
+      const [hour, minute] = match.split(':');
+      const hourNum = parseInt(hour);
+      const ampm = hourNum >= 12 ? 'PM' : 'AM';
+      const newHour = hourNum % 12 || 12;
+      return `${newHour}:${minute} ${ampm}`;
+    });
+  };
+
   return (
     <div
-      className="card-interactive group"
+      className="card-interactive group flex flex-col"
       onClick={onClick}
     >
-      <div className="relative aspect-[16/9] overflow-hidden bg-gray-100">
+      <div className="relative aspect-video w-full overflow-hidden rounded-t-2xl bg-gray-100">
         {!imageError ? (
           <Image
             src={imageUrl}
@@ -47,43 +60,37 @@ export function FoodListingCard({
           />
         ) : (
           <div className="flex h-full items-center justify-center">
-            <svg
-              className="h-12 w-12 text-gray-400"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-              />
-            </svg>
+            <ShoppingBasket className="h-12 w-12 text-gray-400" />
           </div>
         )}
       </div>
 
-      <div className="p-4">
-        <h3 className="text-lg font-semibold text-gray-900">{name}</h3>
-        <p className="mt-1 text-sm text-gray-600 line-clamp-2">{description}</p>
-
-        <div className="mt-4 flex flex-wrap gap-4 text-sm">
-          <div>
-            <div className="font-medium text-gray-700">Quantity</div>
-            <div className="text-gray-600">{quantity}</div>
+      <div className="flex flex-grow flex-col p-4">
+        <h3 className="font-display text-xl font-bold text-gray-900">{name}</h3>
+        <p className="mt-1 text-sm font-medium text-gray-600">by {vendor}</p>
+        
+        <div className="mt-4 flex-grow space-y-2 text-sm">
+          <div className="flex items-center gap-2 text-gray-600">
+            <ShoppingBasket className="h-4 w-4" />
+            <span>{quantity} available</span>
           </div>
-          <div>
-            <div className="font-medium text-gray-700">Pickup</div>
-            <div className="text-gray-600">{pickupWindow}</div>
+          <div className="flex items-center gap-2 text-gray-600">
+            <Clock className="h-4 w-4" />
+            <span>{formatPickupWindow(pickupWindow)}</span>
+          </div>
+          <div className="flex items-center gap-2 text-gray-600">
+            <Calendar className="h-4 w-4" />
+            <span>Expires: {new Date(expiry).toLocaleDateString()}</span>
           </div>
         </div>
 
-        <div className="mt-4 flex items-center justify-between border-t pt-4">
-          <div className="text-sm">
-            <div className="font-medium text-gray-900">{vendor}</div>
-          </div>
-          <button className="btn-primary btn-sm" onClick={(e) => { e.stopPropagation(); onClick();}}>Reserve</button>
+        <div className="mt-4 pt-4">
+          <Button 
+            className="w-full" 
+            onClick={(e) => { e.stopPropagation(); onClick();}}
+          >
+            View Details
+          </Button>
         </div>
       </div>
     </div>

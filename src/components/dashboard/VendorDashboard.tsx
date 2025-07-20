@@ -46,7 +46,7 @@ export function VendorDashboard() {
       <div>
         <h1 className="text-2xl font-bold text-gray-900">Vendor Dashboard</h1>
         <p className="mt-1 text-sm text-gray-500">
-          Here's an overview of your listings and impact.
+          Here&apos;s an overview of your listings and impact.
         </p>
       </div>
       <StatsGrid stats={stats} />

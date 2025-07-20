@@ -3,26 +3,26 @@ import { HandHeart } from 'lucide-react';
 
 const navigation = {
   solutions: [
-    { name: 'For Vendors', href: '#' },
-    { name: 'For Consumers', href: '#' },
-    { name: 'For NGOs', href: '#' },
-    { name: 'Pricing', href: '#' },
+    { name: 'For Vendors', href: '/vendors' },
+    { name: 'For Consumers', href: '/listings' },
+    { name: 'For NGOs', href: '/ngos' },
+    { name: 'Pricing', href: '/pricing' },
   ],
   support: [
-    { name: 'FAQ', href: '#' },
-    { name: 'Contact Us', href: '#' },
-    { name: 'Help Center', href: '#' },
+    { name: 'FAQ', href: '/faq' },
+    { name: 'Contact Us', href: '/contact' },
+    { name: 'Help Center', href: '/help' },
   ],
   company: [
-    { name: 'About Us', href: '#' },
-    { name: 'Careers', href: '#' },
-    { name: 'Press', href: '#' },
-    { name: 'Blog', href: '#' },
+    { name: 'About Us', href: '/about' },
+    { name: 'Careers', href: '/careers' },
+    { name: 'Press', href: '/press' },
+    { name: 'Blog', href: '/blog' },
   ],
   legal: [
-    { name: 'Privacy Policy', href: '#' },
-    { name: 'Terms of Service', href: '#' },
-    { name: 'Cookie Policy', href: '#' },
+    { name: 'Privacy Policy', href: '/privacy' },
+    { name: 'Terms of Service', href: '/terms' },
+    { name: 'Cookie Policy', href: '/cookies' },
   ],
   social: [
     {

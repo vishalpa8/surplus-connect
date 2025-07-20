@@ -1,6 +1,7 @@
 import "./globals.css";
 import { Nunito, Poppins } from "next/font/google";
 import { ClientProviders } from "@/components/providers/ClientProviders";
+import { ConditionalFooter } from "@/components/layout/ConditionalFooter";
 
 const nunito = Nunito({ 
   subsets: ["latin"],
@@ -28,8 +29,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${nunito.variable} ${poppins.variable} font-sans`}>
-        <ClientProviders>{children}</ClientProviders>
+      <body className={`${nunito.variable} ${poppins.variable} font-sans`} suppressHydrationWarning>
+        <ClientProviders>
+          {children}
+          <ConditionalFooter />
+        </ClientProviders>
       </body>
     </html>
   );

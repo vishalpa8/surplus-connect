@@ -8,7 +8,7 @@ export default function AdminDashboardPage() {
       <div className="space-y-8">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
-          <p className="mt-2 text-gray-600">Overview of the platform's activity.</p>
+          <p className="mt-2 text-gray-600">Overview of the platform&apos;s activity.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <StatCard title="Total Users" value="1,234" change="+5.4%" changeType="increase" icon={<Users />} />

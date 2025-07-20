@@ -1,112 +1,273 @@
 'use client';
 
-import { useState } from 'react';
-import DashboardLayout from '@/components/layout/DashboardLayout';
 import { useAuth } from '@/context/AuthContext';
-import { Input } from '@/components/ui/Input';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { DashboardNavbar } from '@/components/layout/DashboardNavbar';
+import { User, Mail, Phone, MapPin, Building, Edit, Save, X, Shield, Bell, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
-import { BadgeCard } from '@/components/ui/BadgeCard';
-import { Award, Bell, CreditCard, Edit, Heart, User } from 'lucide-react';
-import Image from 'next/image';
-
-const badges = [
-  { name: 'First Rescue', description: 'Reserved your first meal', icon: <Heart />, isUnlocked: true },
-  { name: 'Community Helper', description: 'Rescued 10+ meals', icon: <Heart />, isUnlocked: true },
-  { name: 'Good Samaritan', description: 'Rescued 50+ meals', icon: <Heart />, isUnlocked: false },
-  { name: 'Vendor Verifier', description: 'First vendor listing', icon: <Award />, isUnlocked: true },
-  { name: 'Top Contributor', description: 'Listed 20+ items', icon: <Award />, isUnlocked: false },
-];
+import { Input } from '@/components/ui/Input';
+import { PhoneInput } from '@/components/ui/PhoneInput';
 
 export default function ProfilePage() {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
+  const router = useRouter();
   const [isEditing, setIsEditing] = useState(false);
+  const [formData, setFormData] = useState({
+    name: user?.name || '',
+    email: user?.email || '',
+    phone: '+1 (555) 123-4567', // Mock data
+    address: '123 Main Street', // Mock data
+    city: 'New York',
+    state: 'NY',
+    zipCode: '10001',
+    country: 'United States'
+  });
+
+  const handleSave = () => {
+    // In a real app, this would save to the backend
+    setIsEditing(false);
+    // Show success message
+  };
+
+  const handleCancel = () => {
+    // Reset form data
+    setFormData({
+      name: user?.name || '',
+      email: user?.email || '',
+      phone: '+1 (555) 123-4567',
+      address: '123 Main Street',
+      city: 'New York',
+      state: 'NY',
+      zipCode: '10001',
+      country: 'United States'
+    });
+    setIsEditing(false);
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    router.push('/auth/login');
+    return null;
+  }
+
+  const getRoleColor = () => {
+    switch (user.role) {
+      case 'vendor': return 'bg-blue-600';
+      case 'ngo': return 'bg-purple-600';
+      default: return 'bg-green-600';
+    }
+  };
 
   return (
-    <DashboardLayout>
-      <div className="max-w-4xl mx-auto space-y-8">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Your Profile</h1>
-          <p className="mt-2 text-gray-600">Manage your personal information, settings, and achievements.</p>
-        </div>
-
-        {/* Profile Card */}
-        <div className="bg-white p-8 rounded-2xl shadow-soft-lg">
-          <div className="flex flex-col sm:flex-row items-center gap-8">
-            <div className="relative">
-              <div className="h-24 w-24 rounded-full bg-gray-100 overflow-hidden">
-                {/* Placeholder for avatar */}
-                <User className="h-full w-full text-gray-400 p-4" />
-              </div>
-              <button className="absolute bottom-0 right-0 h-8 w-8 bg-primary-600 rounded-full flex items-center justify-center text-white hover:bg-primary-700">
-                <Edit className="h-4 w-4" />
-              </button>
+    <div className="min-h-screen bg-gray-50">
+      <DashboardNavbar />
+      
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Profile Header */}
+        <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-100 mb-8">
+          <div className="flex items-center gap-6">
+            <div className={`w-20 h-20 ${getRoleColor()} rounded-full flex items-center justify-center text-white font-bold text-2xl`}>
+              {user.name[0].toUpperCase()}
             </div>
-            <div className="flex-grow text-center sm:text-left">
-              <h2 className="text-2xl font-bold text-gray-900">{user?.name}</h2>
-              <p className="text-gray-600">{user?.email}</p>
-              <span className="badge-primary mt-2">{user?.role}</span>
+            <div className="flex-1">
+              <h1 className="text-2xl font-bold text-gray-900">{user.name}</h1>
+              <p className="text-gray-600">{user.email}</p>
+              <div className="flex items-center gap-4 mt-2">
+                <span className={`inline-flex px-3 py-1 text-sm font-medium rounded-full ${
+                  user.role === 'vendor' ? 'bg-blue-100 text-blue-800' :
+                  user.role === 'ngo' ? 'bg-purple-100 text-purple-800' :
+                  'bg-green-100 text-green-800'
+                }`}>
+                  {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
+                </span>
+                <span className="text-sm text-gray-500">
+                  Member since {new Date(user.createdAt).toLocaleDateString()}
+                </span>
+              </div>
             </div>
-            <Button onClick={() => setIsEditing(!isEditing)} variant={isEditing ? 'secondary' : 'outline'}>
-              {isEditing ? 'Cancel' : 'Edit Profile'}
-            </Button>
-          </div>
-          
-          {isEditing && (
-            <form className="mt-8 space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <Input id="name" label="Full Name" defaultValue={user?.name} />
-                <Input id="email" label="Email Address" defaultValue={user?.email} type="email" />
-              </div>
-              <Input id="location" label="Location" placeholder="Anytown, USA" />
-              <div className="flex justify-end">
-                <Button>Save Changes</Button>
-              </div>
-            </form>
-          )}
-        </div>
-
-        {/* Badge Wall */}
-        <div>
-          <h2 className="text-2xl font-bold text-gray-900">Badge Wall</h2>
-          <div className="mt-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {badges.map(badge => (
-              <BadgeCard key={badge.name} {...badge} />
-            ))}
+            {!isEditing && (
+              <Button onClick={() => setIsEditing(true)}>
+                <Edit className="h-4 w-4 mr-2" />
+                Edit Profile
+              </Button>
+            )}
           </div>
         </div>
 
-        {/* Settings */}
-        <div className="space-y-8">
-            <div>
-                <h2 className="text-2xl font-bold text-gray-900">Settings</h2>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Profile Form */}
+          <div className="lg:col-span-2">
+            <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-100">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-lg font-bold text-gray-900">Personal Information</h2>
+                {isEditing && (
+                  <div className="flex items-center gap-2">
+                    <Button size="sm" onClick={handleSave}>
+                      <Save className="h-4 w-4 mr-2" />
+                      Save Changes
+                    </Button>
+                    <Button size="sm" variant="outline" onClick={handleCancel}>
+                      <X className="h-4 w-4 mr-2" />
+                      Cancel
+                    </Button>
+                  </div>
+                )}
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <Input
+                  label="Full Name"
+                  value={formData.name}
+                  onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                  disabled={!isEditing}
+                  icon={<User className="h-4 w-4" />}
+                />
+
+                <Input
+                  label="Email Address"
+                  value={formData.email}
+                  onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+                  disabled={!isEditing}
+                  icon={<Mail className="h-4 w-4" />}
+                />
+
+                <PhoneInput
+                  label="Phone Number"
+                  value={formData.phone}
+                  onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
+                  disabled={!isEditing}
+                />
+
+                <Input
+                  label="Address"
+                  value={formData.address}
+                  onChange={(e) => setFormData(prev => ({ ...prev, address: e.target.value }))}
+                  disabled={!isEditing}
+                  icon={<MapPin className="h-4 w-4" />}
+                />
+
+                <Input
+                  label="City"
+                  value={formData.city}
+                  onChange={(e) => setFormData(prev => ({ ...prev, city: e.target.value }))}
+                  disabled={!isEditing}
+                  icon={<Building className="h-4 w-4" />}
+                />
+
+                <Input
+                  label="State/Province"
+                  value={formData.state}
+                  onChange={(e) => setFormData(prev => ({ ...prev, state: e.target.value }))}
+                  disabled={!isEditing}
+                />
+
+                <Input
+                  label="ZIP/Postal Code"
+                  value={formData.zipCode}
+                  onChange={(e) => setFormData(prev => ({ ...prev, zipCode: e.target.value }))}
+                  disabled={!isEditing}
+                />
+
+                <Input
+                  label="Country"
+                  value={formData.country}
+                  onChange={(e) => setFormData(prev => ({ ...prev, country: e.target.value }))}
+                  disabled={!isEditing}
+                />
+              </div>
             </div>
-            {/* Subscription */}
-            <div className="bg-white p-8 rounded-2xl shadow-soft-lg">
-                <h3 className="text-xl font-bold flex items-center gap-2"><CreditCard /> Subscription</h3>
-                <p className="mt-2 text-gray-600">You are currently on the <span className="font-bold text-primary-600">Free Plan</span>.</p>
-                <Button variant="secondary" className="mt-4">Upgrade to Pro</Button>
-            </div>
-            {/* Notifications */}
-            <div className="bg-white p-8 rounded-2xl shadow-soft-lg">
-                <h3 className="text-xl font-bold flex items-center gap-2"><Bell /> Notification Preferences</h3>
-                <div className="mt-4 space-y-4">
-                    <div className="flex items-center justify-between">
-                        <label htmlFor="new-listings" className="text-gray-700">New listings in your area</label>
-                        <input type="checkbox" id="new-listings" className="form-checkbox" defaultChecked />
-                    </div>
-                    <div className="flex items-center justify-between">
-                        <label htmlFor="reservation-updates" className="text-gray-700">Reservation updates</label>
-                        <input type="checkbox" id="reservation-updates" className="form-checkbox" defaultChecked />
-                    </div>
-                    <div className="flex items-center justify-between">
-                        <label htmlFor="newsletter" className="text-gray-700">Newsletter and updates</label>
-                        <input type="checkbox" id="newsletter" className="form-checkbox" />
-                    </div>
+          </div>
+
+          {/* Account Stats & Settings */}
+          <div className="space-y-6">
+            {/* Account Stats */}
+            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+              <h3 className="text-lg font-bold text-gray-900 mb-4">Account Statistics</h3>
+              <div className="space-y-4">
+                <div className="text-center p-4 bg-gray-50 rounded-lg">
+                  <div className="text-2xl font-bold text-primary-600">
+                    {user.role === 'vendor' ? '23' : user.role === 'ngo' ? '156' : '12'}
+                  </div>
+                  <div className="text-sm text-gray-600">
+                    {user.role === 'vendor' ? 'Active Listings' : user.role === 'ngo' ? 'Items Received' : 'Items Rescued'}
+                  </div>
                 </div>
-            </div>
-        </div>
 
+                <div className="text-center p-4 bg-gray-50 rounded-lg">
+                  <div className="text-2xl font-bold text-green-600">
+                    {user.role === 'vendor' ? '$1,247' : user.role === 'ngo' ? '1,247' : '$89'}
+                  </div>
+                  <div className="text-sm text-gray-600">
+                    {user.role === 'vendor' ? 'Revenue' : user.role === 'ngo' ? 'People Served' : 'Money Saved'}
+                  </div>
+                </div>
+
+                <div className="text-center p-4 bg-gray-50 rounded-lg">
+                  <div className="text-2xl font-bold text-blue-600">
+                    {user.role === 'vendor' ? '4.9' : user.role === 'ngo' ? '89%' : '4.8'}
+                  </div>
+                  <div className="text-sm text-gray-600">
+                    {user.role === 'vendor' ? 'Rating' : user.role === 'ngo' ? 'Distribution Rate' : 'Rating'}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Account Settings */}
+            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+              <h3 className="text-lg font-bold text-gray-900 mb-4">Account Settings</h3>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                  <div className="flex items-center gap-3">
+                    <Shield className="h-5 w-5 text-gray-400" />
+                    <div>
+                      <h4 className="font-medium text-gray-900">Security</h4>
+                      <p className="text-sm text-gray-600">Password & 2FA</p>
+                    </div>
+                  </div>
+                  <Button variant="outline" size="sm">
+                    Manage
+                  </Button>
+                </div>
+
+                <div className="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                  <div className="flex items-center gap-3">
+                    <Bell className="h-5 w-5 text-gray-400" />
+                    <div>
+                      <h4 className="font-medium text-gray-900">Notifications</h4>
+                      <p className="text-sm text-gray-600">Email & push settings</p>
+                    </div>
+                  </div>
+                  <Button variant="outline" size="sm">
+                    Configure
+                  </Button>
+                </div>
+
+                <div className="flex items-center justify-between p-3 border border-red-200 rounded-lg bg-red-50 hover:bg-red-100 transition-colors">
+                  <div className="flex items-center gap-3">
+                    <Trash2 className="h-5 w-5 text-red-500" />
+                    <div>
+                      <h4 className="font-medium text-red-900">Delete Account</h4>
+                      <p className="text-sm text-red-600">Permanently remove account</p>
+                    </div>
+                  </div>
+                  <Button variant="outline" size="sm" className="text-red-600 border-red-300 hover:bg-red-100">
+                    Delete
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </DashboardLayout>
+    </div>
   );
 }

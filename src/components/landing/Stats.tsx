@@ -25,7 +25,7 @@ export function Stats() {
             Join a Growing Movement
           </p>
           <p className="mt-6 text-lg leading-8 text-gray-600">
-            We are proud of the community we're building and the positive impact we're making together. The numbers speak for themselves.
+            We are proud of the community we&apos;re building and the positive impact we&apos;re making together. The numbers speak for themselves.
           </p>
         </div>
         <div className="mt-16 sm:mt-20">

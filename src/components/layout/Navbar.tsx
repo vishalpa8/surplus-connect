@@ -6,28 +6,65 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useAuth } from '@/context/AuthContext';
 import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
-import { Leaf, HandHeart, Building, HeartHandshake } from 'lucide-react'; // Using lucide-react for nice icons
+import { HandHeart, Building, HeartHandshake, Search, Info, DollarSign } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
-const navigation = [
-  { name: 'Home', href: '/' },
+// Navigation links
+const publicNavigation = [
   { name: 'For Vendors', href: '/vendors', icon: Building },
   { name: 'For NGOs', href: '/ngos', icon: HeartHandshake },
-  { name: 'Find Food', href: '/listings' },
-  { name: 'About', href: '/about' },
+  { name: 'Pricing', href: '/pricing', icon: DollarSign },
+  { name: 'About', href: '/about', icon: Info },
+];
+
+const consumerNavigation = [
+  { name: 'Find Food', href: '/listings', icon: Search },
+  { name: 'My Reservations', href: '/dashboard/reservations', icon: Info },
+  { name: 'Map', href: '/map', icon: Info },
+];
+
+const vendorNavigation = [
+  { name: 'Dashboard', href: '/dashboard', icon: Info },
+  { name: 'Listings', href: '/dashboard/listings', icon: Info },
+  { name: 'Analytics', href: '/dashboard/analytics', icon: Info },
+];
+
+const ngoNavigation = [
+  { name: 'Dashboard', href: '/dashboard', icon: Info },
+  { name: 'Find Food', href: '/listings', icon: Search },
+  { name: 'Requests', href: '/dashboard/requests', icon: Info },
 ];
 
 export function Navbar() {
   const { user, logout } = useAuth();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    await logout();
+    router.push('/');
+  };
+
+  const getNavigation = () => {
+    if (!user) return publicNavigation;
+    switch (user.role) {
+      case 'consumer': return consumerNavigation;
+      case 'vendor': return vendorNavigation;
+      case 'ngo': return ngoNavigation;
+      default: return publicNavigation;
+    }
+  };
+
+  const navigation = getNavigation();
 
   return (
-    <Disclosure as="nav" className="fixed left-0 right-0 top-0 z-50 bg-white/90 shadow-soft-sm backdrop-blur-md">
+    <Disclosure as="nav" className="fixed left-0 right-0 top-0 z-50 bg-white/95 shadow-sm backdrop-blur-lg border-b border-gray-100">
       {({ open }) => (
         <>
-          <div className="container-custom">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex h-20 items-center justify-between">
               <div className="flex items-center">
                 <div className="flex flex-shrink-0 items-center">
-                  <Link href="/" className="flex items-center gap-2 text-xl font-bold">
+                  <Link href="/" className="flex items-center gap-3 text-xl font-bold">
                     <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary-600 text-white flex-shrink-0">
                       <HandHeart size={24} className="h-6 w-6 shrink-0" />
                     </div>
@@ -36,14 +73,15 @@ export function Navbar() {
                     </span>
                   </Link>
                 </div>
+                
                 <div className="hidden sm:ml-10 sm:flex sm:space-x-8">
                   {navigation.map((item) => (
                     <Link
                       key={item.name}
                       href={item.href}
-                      className="group relative px-1 py-2 text-base font-bold text-gray-500 transition-colors hover:text-primary-600 flex items-center gap-2"
+                      className="group relative px-1 py-2 text-base font-medium text-gray-600 transition-colors hover:text-primary-600 flex items-center gap-2"
                     >
-                      {item.icon && <item.icon className="h-5 w-5 shrink-0 align-middle" />}
+                      {item.icon && <item.icon className="h-4 w-4 shrink-0" />}
                       {item.name}
                       <span className="absolute inset-x-0 bottom-0 h-0.5 bg-primary-500 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                     </Link>
@@ -70,7 +108,7 @@ export function Navbar() {
                       leaveFrom="transform opacity-100 scale-100"
                       leaveTo="transform opacity-0 scale-95"
                     >
-                    <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right overflow-hidden rounded-2xl bg-white shadow-soft-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right overflow-hidden rounded-2xl bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <Menu.Item>
                           {({ active }) => (
                             <Link
@@ -98,7 +136,7 @@ export function Navbar() {
                         <Menu.Item>
                           {({ active }) => (
                             <button
-                              onClick={() => logout()}
+                              onClick={handleLogout}
                               className={`${
                                 active ? 'bg-gray-100' : ''
                               } block w-full px-4 py-3 text-left text-base text-gray-700 transition-colors hover:bg-primary-50`}
@@ -111,14 +149,14 @@ export function Navbar() {
                     </Transition>
                   </Menu>
                 ) : (
-                  <div className="space-x-2">
+                  <div className="space-x-3">
                     <Link href="/auth/login">
                       <Button variant="outline" size="md">
                         Log In
                       </Button>
                     </Link>
                     <Link href="/auth/register">
-                      <Button size="md">Sign Up</Button>
+                      <Button size="md">Get Started</Button>
                     </Link>
                   </div>
                 )}
@@ -144,12 +182,14 @@ export function Navbar() {
                   key={item.name}
                   as={Link}
                   href={item.href}
-                  className="block rounded-lg py-2 pl-3 pr-4 text-base font-bold text-gray-600 hover:bg-primary-50 hover:text-primary-700"
+                  className="flex items-center gap-3 rounded-lg py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:bg-primary-50 hover:text-primary-700"
                 >
+                  {item.icon && <item.icon className="h-4 w-4" />}
                   {item.name}
                 </Disclosure.Button>
               ))}
             </div>
+            
             {user ? (
               <div className="border-t border-gray-200 pb-3 pt-4">
                 <div className="flex items-center px-4">
@@ -160,28 +200,28 @@ export function Navbar() {
                   </div>
                   <div className="ml-3">
                     <div className="text-base font-bold text-gray-800">{user.name}</div>
-                    <div className="text-sm font-medium text-gray-500">{user.email}</div>
+                    <div className="text-sm font-medium text-gray-500 capitalize">{user.role}</div>
                   </div>
                 </div>
                 <div className="mt-3 space-y-1 px-4">
                   <Disclosure.Button
                     as={Link}
                     href="/dashboard"
-                    className="block rounded-lg px-3 py-2 text-base font-bold text-gray-600 hover:bg-primary-50 hover:text-primary-700"
+                    className="block rounded-lg px-3 py-2 text-base font-medium text-gray-600 hover:bg-primary-50 hover:text-primary-700"
                   >
                     Dashboard
                   </Disclosure.Button>
                   <Disclosure.Button
                     as={Link}
                     href="/profile"
-                    className="block rounded-lg px-3 py-2 text-base font-bold text-gray-600 hover:bg-primary-50 hover:text-primary-700"
+                    className="block rounded-lg px-3 py-2 text-base font-medium text-gray-600 hover:bg-primary-50 hover:text-primary-700"
                   >
                     Profile
                   </Disclosure.Button>
                   <Disclosure.Button
                     as="button"
-                    onClick={() => logout()}
-                    className="block w-full rounded-lg px-3 py-2 text-left text-base font-bold text-gray-600 hover:bg-primary-50 hover:text-primary-700"
+                    onClick={handleLogout}
+                    className="block w-full rounded-lg px-3 py-2 text-left text-base font-medium text-gray-600 hover:bg-primary-50 hover:text-primary-700"
                   >
                     Sign out
                   </Disclosure.Button>
@@ -195,7 +235,7 @@ export function Navbar() {
                   </Button>
                 </Link>
                 <Link href="/auth/register" className="block">
-                  <Button className="w-full" size="md">Sign Up</Button>
+                  <Button className="w-full" size="md">Get Started</Button>
                 </Link>
               </div>
             )}

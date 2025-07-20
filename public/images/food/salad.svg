@@ -1,0 +1,10 @@
+<svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="300" fill="#f8f7f4"/>
+  <rect x="50" y="50" width="300" height="200" rx="20" fill="#74b366" opacity="0.1"/>
+  <ellipse cx="200" cy="180" rx="70" ry="30" fill="#8cc081" opacity="0.6"/>
+  <path d="M150 160 Q170 140 190 160 Q210 140 230 160 Q250 140 270 160" stroke="#74b366" stroke-width="3" fill="none"/>
+  <circle cx="180" cy="150" r="4" fill="#ff5a1f"/>
+  <circle cx="220" cy="155" r="4" fill="#ff5a1f"/>
+  <circle cx="200" cy="165" r="4" fill="#ff5a1f"/>
+  <text x="200" y="220" text-anchor="middle" fill="#5f9a52" font-family="Arial, sans-serif" font-size="16" font-weight="bold">Fresh Salad</text>
+</svg>

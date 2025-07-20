@@ -1,0 +1,10 @@
+<svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="300" fill="#f8f7f4"/>
+  <rect x="50" y="50" width="300" height="200" rx="20" fill="#74b366" opacity="0.1"/>
+  <circle cx="200" cy="150" r="80" fill="#ff8a4c" opacity="0.8"/>
+  <circle cx="180" cy="130" r="8" fill="#d03801"/>
+  <circle cx="220" cy="140" r="8" fill="#d03801"/>
+  <circle cx="190" cy="170" r="8" fill="#d03801"/>
+  <circle cx="210" cy="160" r="8" fill="#d03801"/>
+  <text x="200" y="220" text-anchor="middle" fill="#5f9a52" font-family="Arial, sans-serif" font-size="16" font-weight="bold">Pizza Slices</text>
+</svg>

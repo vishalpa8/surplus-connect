@@ -8,7 +8,8 @@ const Map = dynamic(() => import('@/components/map/Map').then(mod => mod.Map), {
 import { FoodListingCard } from '@/components/ui/FoodListingCard';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
-import { ListFilter, Search } from 'lucide-react';
+import { Search } from 'lucide-react';
+import { Filter } from '@/components/ui/Filter';
 import { FoodDetailModal } from '@/components/ui/FoodDetailModal';
 import { ReservationConfirmModal } from '@/components/ui/ReservationConfirmModal';
 
@@ -16,7 +17,7 @@ import { ReservationConfirmModal } from '@/components/ui/ReservationConfirmModal
 const listings = [
     {
         id: '1',
-        imageUrl: "https://source.unsplash.com/random/400x300?food",
+        imageUrl: "/images/food/croissant.svg",
         name: "Fresh Croissants",
         vendor: "Bakery Delights",
         expiry: "2023-12-25",
@@ -26,7 +27,7 @@ const listings = [
     },
     {
         id: '2',
-        imageUrl: "https://source.unsplash.com/random/400x300?meal",
+        imageUrl: "/images/food/pizza.svg",
         name: "Leftover Pizza Slices",
         vendor: "Pizza Planet",
         expiry: "2023-12-26",
@@ -36,7 +37,7 @@ const listings = [
     },
     {
         id: '3',
-        imageUrl: "https://source.unsplash.com/random/400x300?salad",
+        imageUrl: "/images/food/salad.svg",
         name: "Fresh Salad Mix",
         vendor: "Green Grocer",
         expiry: "2023-12-25",
@@ -83,32 +84,27 @@ export default function ListingsPage() {
             </p>
             </div>
 
-            <div className="flex flex-col md:flex-row gap-4">
-                <div className="flex items-center flex-grow gap-2">
-                    <Search className="h-5 w-5 text-gray-400" />
-                    <Input placeholder="Search by food, vendor, or location..." className="w-full" />
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+              <div className="lg:col-span-1">
+                <Filter />
+              </div>
+              <div className="lg:col-span-3 space-y-8">
+                <div className="h-[500px] w-full">
+                  <Map />
                 </div>
-                <Button variant="outline" size="sm">
-                    <ListFilter className="mr-2 h-5 w-5 align-middle" />
-                    Filters
-                </Button>
-            </div>
-
-            <div className="h-[500px] w-full">
-            <Map />
-            </div>
-
-            <div>
-            <h2 className="text-2xl font-bold text-gray-900">Available Now</h2>
-            <div className="mt-4 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {listings.map((listing) => (
-                <FoodListingCard 
-                    key={listing.id} 
-                    {...listing} 
-                    onClick={() => handleCardClick(listing)}
-                />
-                ))}
-            </div>
+                <div>
+                  <h2 className="text-2xl font-bold text-gray-900">Available Now</h2>
+                  <div className="mt-4 grid gap-6 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+                    {listings.map((listing) => (
+                      <FoodListingCard 
+                        key={listing.id} 
+                        {...listing} 
+                        onClick={() => handleCardClick(listing)}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
         </div>
       </main>
