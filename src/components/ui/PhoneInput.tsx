@@ -1,11 +1,11 @@
 'use client';
 
 import { forwardRef, InputHTMLAttributes } from 'react';
-import clsx from 'clsx';
+import { cn } from '@/lib/utils';
 
 interface PhoneInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
   label?: string;
-  error?: string;
+  error?: string | undefined;
   hint?: string;
   fullWidth?: boolean;
   countryCode?: string;
@@ -27,7 +27,7 @@ export const PhoneInput = forwardRef<HTMLInputElement, PhoneInputProps>(
           <input
             ref={ref}
             type="tel"
-            className={clsx(
+            className={cn(
               'form-input rounded-l-none flex-1',
               error && 'border-error-300 focus:border-error-500 focus:ring-error-500',
               className

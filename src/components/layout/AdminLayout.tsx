@@ -34,6 +34,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const pathname = usePathname();
   const { logout } = useAuth();
+  // Adapter for next/link onClick: must be MouseEventHandler<HTMLAnchorElement>
+  const handleLogout: React.MouseEventHandler<HTMLAnchorElement> = async (e) => {
+    e.preventDefault();
+    await logout();
+  };
 
   const sidebarContent = (
     <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-4">
@@ -71,14 +76,24 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
              <ul role="list" className="-mx-2 space-y-1">
                 {userNavigation.map((item) => (
                     <li key={item.name}>
-                        <Link
+                        {item.action === 'logout' ? (
+                          <Link
                             href={item.href}
-                            onClick={item.action === 'logout' ? logout : undefined}
+                            onClick={handleLogout}
                             className="group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white"
-                        >
+                          >
                             <item.icon className="h-6 w-6 shrink-0" aria-hidden="true" />
                             {item.name}
-                        </Link>
+                          </Link>
+                        ) : (
+                          <Link
+                            href={item.href}
+                            className="group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white"
+                          >
+                            <item.icon className="h-6 w-6 shrink-0" aria-hidden="true" />
+                            {item.name}
+                          </Link>
+                        )}
                     </li>
                 ))}
              </ul>

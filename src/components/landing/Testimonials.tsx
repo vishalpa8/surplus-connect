@@ -3,6 +3,9 @@
 import Image from 'next/image';
 import { useState, useEffect, useCallback } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon, StarIcon } from '@heroicons/react/24/solid';
+import { Container } from '@/components/ui/Container';
+import { Grid } from '@/components/ui/Grid';
+import { HideMobile, MobileOnly } from '@/components/ui/Responsive';
 
 const testimonials = [
   {
@@ -78,7 +81,7 @@ export function Testimonials() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,_theme(colors.primary.400)_1px,_transparent_0)] [background-size:24px_24px]"></div>
       </div>
       
-      <div className="container-custom relative">
+      <Container size="xl" className="relative">
         {/* Header */}
         <div className="mx-auto max-w-3xl text-center">
           <div className="inline-flex items-center gap-2 rounded-full bg-primary-100 px-4 py-2 text-sm font-semibold text-primary-700 mb-6">
@@ -198,12 +201,15 @@ export function Testimonials() {
             <div className="mt-2 text-sm font-medium text-gray-600">Average Rating</div>
           </div>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }
 
-function TestimonialCard({ testimonial, isActive }: { testimonial: typeof testimonials[0], isActive: boolean }) {
+function TestimonialCard({ testimonial, isActive }: { testimonial: typeof testimonials[0] | undefined, isActive: boolean }) {
+  if (!testimonial) {
+    return <div className="h-full flex items-center justify-center text-gray-400">No testimonial found.</div>;
+  }
   return (
     <div className={`group relative h-full transition-all duration-500 ${isActive ? 'animate-slide-up' : ''}`}>
       {/* Card */}

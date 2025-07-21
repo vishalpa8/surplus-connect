@@ -37,7 +37,7 @@ export function FoodListingCard({
     // This is a simple format, if the window is more complex, this will need to be updated
     return window.replace(/(\d{1,2}:\d{2})/, (match) => {
       const [hour, minute] = match.split(':');
-      const hourNum = parseInt(hour);
+      const hourNum = parseInt(hour || '0');
       const ampm = hourNum >= 12 ? 'PM' : 'AM';
       const newHour = hourNum % 12 || 12;
       return `${newHour}:${minute} ${ampm}`;

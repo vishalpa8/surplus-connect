@@ -2,11 +2,11 @@
 
 import { forwardRef, useState, InputHTMLAttributes } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
-import clsx from 'clsx';
+import { cn } from '@/lib/utils';
 
 interface PasswordInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
   label?: string;
-  error?: string;
+  error?: string | undefined;
   hint?: string;
   fullWidth?: boolean;
   showStrengthIndicator?: boolean;
@@ -51,8 +51,8 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
             ref={ref}
             type={showPassword ? 'text' : 'password'}
             value={value}
-            className={clsx(
-              'form-input pr-12',
+            className={cn(
+              'form-input pr-10',
               error && 'border-error-300 focus:border-error-500 focus:ring-error-500',
               className
             )}
@@ -77,7 +77,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
             <div className="flex items-center gap-2">
               <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
                 <div 
-                  className={clsx('h-full transition-all duration-300', strength.color)}
+                  className={cn('h-full transition-all duration-300', strength.color)}
                   style={{ width: `${(strength.score / 5) * 100}%` }}
                 />
               </div>

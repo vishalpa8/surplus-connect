@@ -2,12 +2,12 @@
 
 import { forwardRef, InputHTMLAttributes } from 'react';
 import { Check } from 'lucide-react';
-import clsx from 'clsx';
+import { cn } from '@/lib/utils';
 
 interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
   label?: React.ReactNode;
   description?: string;
-  error?: string;
+  error?: string | undefined;
 }
 
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
@@ -19,19 +19,17 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             ref={ref}
             type="checkbox"
             checked={checked}
-            className={clsx(
-              'sr-only',
-              className
+            className={cn(
+              'sr-only'
             )}
             {...props}
           />
           <div
-            className={clsx(
-              'flex h-5 w-5 items-center justify-center rounded border-2 transition-all',
-              checked
-                ? 'bg-primary-600 border-primary-600'
-                : 'bg-white border-gray-300 hover:border-gray-400',
-              error && 'border-error-300'
+            className={cn(
+              'h-4 w-4 rounded border-2 border-gray-300 bg-white transition-all duration-200 flex items-center justify-center',
+              'peer-checked:bg-primary-600 peer-checked:border-primary-600',
+              'peer-focus:ring-2 peer-focus:ring-primary-500 peer-focus:ring-offset-2',
+              'peer-disabled:opacity-50 peer-disabled:cursor-not-allowed'
             )}
           >
             {checked && (

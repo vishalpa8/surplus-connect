@@ -7,10 +7,12 @@ export class LocalStorageAuthService implements AuthService {
     // Simulate API call delay
     await new Promise((resolve) => setTimeout(resolve, 500));
 
+    const emailParts = email.split('@');
+    const userName = emailParts[0] || 'user';
     const user: User = {
       id: '1', // In real app, this would come from backend
       email,
-      name: email.split('@')[0],
+      name: userName,
     };
 
     const response: AuthResponse = {
@@ -29,7 +31,7 @@ export class LocalStorageAuthService implements AuthService {
     const newUser: User = {
       id: '1', // In real app, this would come from backend
       email: user.email,
-      name: user.name,
+      ...(user.name !== undefined && { name: user.name }),
     };
 
     const response: AuthResponse = {

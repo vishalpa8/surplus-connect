@@ -2,11 +2,11 @@
 
 import { forwardRef, SelectHTMLAttributes } from 'react';
 import { ChevronDown } from 'lucide-react';
-import clsx from 'clsx';
+import { cn } from '@/lib/utils';
 
 interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   label?: string;
-  error?: string;
+  error?: string | undefined;
   hint?: string;
   fullWidth?: boolean;
   options: { value: string; label: string }[];
@@ -25,7 +25,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
         <div className="relative">
           <select
             ref={ref}
-            className={clsx(
+            className={cn(
               'form-select appearance-none pr-10',
               error && 'border-error-300 focus:border-error-500 focus:ring-error-500',
               className

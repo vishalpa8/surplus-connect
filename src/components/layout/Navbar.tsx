@@ -5,6 +5,7 @@ import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useAuth } from '@/context/AuthContext';
 import { Button } from '@/components/ui/Button';
+import { Container } from '@/components/ui/Container';
 import Link from 'next/link';
 import { HandHeart, Building, HeartHandshake, Search, Info, DollarSign } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -60,7 +61,7 @@ export function Navbar() {
     <Disclosure as="nav" className="fixed left-0 right-0 top-0 z-50 bg-white/95 shadow-sm backdrop-blur-lg border-b border-gray-100">
       {({ open }) => (
         <>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Container size="xl" className="w-full">
             <div className="flex h-20 items-center justify-between">
               <div className="flex items-center">
                 <div className="flex flex-shrink-0 items-center">
@@ -95,7 +96,7 @@ export function Navbar() {
                     <Menu.Button className="flex items-center gap-3 rounded-full bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm ring-1 ring-gray-200/80 transition-all hover:bg-gray-50 hover:ring-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2">
                       <span className="sr-only">Open user menu</span>
                       <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary-100 font-bold text-primary-700">
-                        {user.name[0].toUpperCase()}
+                        {user.name && user.name[0] ? user.name[0].toUpperCase() : '?'}
                       </div>
                       <span>{user.name}</span>
                     </Menu.Button>
@@ -173,7 +174,7 @@ export function Navbar() {
                 </Disclosure.Button>
               </div>
             </div>
-          </div>
+          </Container>
 
           <Disclosure.Panel className="sm:hidden border-t border-gray-200/80 bg-white/95">
             <div className="space-y-1 px-4 pb-3 pt-2">
@@ -195,7 +196,7 @@ export function Navbar() {
                 <div className="flex items-center px-4">
                   <div className="flex-shrink-0">
                     <div className="h-10 w-10 rounded-full bg-primary-100 flex items-center justify-center font-bold text-primary-700">
-                      {user.name[0].toUpperCase()}
+                      {user.name && user.name[0] ? user.name[0].toUpperCase() : '?'}
                     </div>
                   </div>
                   <div className="ml-3">

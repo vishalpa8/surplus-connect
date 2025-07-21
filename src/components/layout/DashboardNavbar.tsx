@@ -174,7 +174,7 @@ export function DashboardNavbar({ title, subtitle }: DashboardNavbarProps) {
                 <Menu as="div" className="relative">
                   <Menu.Button className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 transition-colors">
                     <div className={`flex h-8 w-8 items-center justify-center rounded-full ${getRoleColor()} text-white font-medium text-sm`}>
-                      {user.name[0].toUpperCase()}
+                      {user.name && user.name[0] ? user.name[0].toUpperCase() : '?'}
                     </div>
                     <div className="hidden sm:block text-left">
                       <p className="text-sm font-medium text-gray-900">{user.name}</p>

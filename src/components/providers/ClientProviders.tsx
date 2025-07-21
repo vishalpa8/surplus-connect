@@ -2,6 +2,8 @@
 
 import { AuthProvider } from '@/context/AuthContext';
 import { NotificationProvider } from '@/context/NotificationContext';
+import { PerformanceProvider } from './PerformanceProvider';
+import { PerformanceMonitor } from '@/components/ui/PerformanceMonitor';
 import { Navbar } from '@/components/layout/Navbar';
 import { usePathname } from 'next/navigation';
 
@@ -15,13 +17,16 @@ export function ClientProviders({ children }: { children: React.ReactNode }) {
   const showLandingNavbar = !isDashboardPage && !isAuthPage;
 
   return (
-    <AuthProvider>
-      <NotificationProvider>
-        {showLandingNavbar && <Navbar />}
-        <main className={showLandingNavbar ? "min-h-screen pt-20" : "min-h-screen"}>
-          {children}
-        </main>
-      </NotificationProvider>
-    </AuthProvider>
+    <PerformanceProvider>
+      <AuthProvider>
+        <NotificationProvider>
+          <PerformanceMonitor />
+          {showLandingNavbar && <Navbar />}
+          <main className={showLandingNavbar ? "min-h-screen pt-20" : "min-h-screen"}>
+            {children}
+          </main>
+        </NotificationProvider>
+      </AuthProvider>
+    </PerformanceProvider>
   );
 }
